@@ -39,6 +39,7 @@ public class CalculatorViewController implements Initializable {
     @FXML private Label historyLabel;
     
     private ArrayList<String> numberStack;
+    private boolean overwriteDisplay;
     
     /**
      * This method will update the display with the number
@@ -53,8 +54,11 @@ public class CalculatorViewController implements Initializable {
         {}  //do nothing
         else
         {
-            if (originalDisplay.equals("0") && !buttonValue.equals("."))
+            if (overwriteDisplay && !buttonValue.equals("."))
+            {
                 display.setText(buttonValue);
+                overwriteDisplay = false;
+            }
             else
                 display.setText(originalDisplay + buttonValue);
         }
@@ -70,7 +74,27 @@ public class CalculatorViewController implements Initializable {
         numberStack.add(operator);
         
         historyLabel.setText(formatNumberStack());
+        overwriteDisplay = true;
     }
+    
+    /**
+     * This method accepts 2 numbers and performs the math between them based
+     * on the operator
+     */
+    public double calculate(double num1, String operator, double num2)
+    {
+        if (operator.equals("+"))
+            return num1+num2;
+        if (operator.equals("*"))
+            return num1*num2;
+        if (operator.equals("/"))
+            return num1/num2;
+        if (operator.equals("-"))
+            return num1-num2;
+        return 0;
+    }
+    
+    
     
     /**
      * This method will return the contents of the numberStack
@@ -78,7 +102,13 @@ public class CalculatorViewController implements Initializable {
      */
     public String formatNumberStack()
     {
+        String formattedOutput = "";
         
+        for (String element:numberStack)
+        {
+            formattedOutput += element;
+        }
+        return formattedOutput;
     }
     
     
@@ -90,6 +120,7 @@ public class CalculatorViewController implements Initializable {
         display.setText("0");
         historyLabel.setText("");
         numberStack = new ArrayList();
+        overwriteDisplay = true;
     }    
     
 }
