@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="378.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="w17march14calculator.CalculatorViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="w17march14calculator.CalculatorViewController">
    <children>
       <GridPane hgap="10.0" layoutX="57.0" layoutY="127.0" prefHeight="217.0" prefWidth="447.0" vgap="10.0">
         <columnConstraints>
@@ -79,37 +78,38 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="equalsButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="=" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Button fx:id="equalsButton" mnemonicParsing="false" onAction="#operationButtonPushed" prefHeight="40.0" prefWidth="40.0" text="=" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="divideButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="/" GridPane.columnIndex="3">
+            <Button fx:id="divideButton" mnemonicParsing="false" onAction="#operationButtonPushed" prefHeight="40.0" prefWidth="40.0" text="/" GridPane.columnIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="multiplyButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="*" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Button fx:id="multiplyButton" mnemonicParsing="false" onAction="#operationButtonPushed" prefHeight="40.0" prefWidth="40.0" text="*" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="minusButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <Button fx:id="minusButton" mnemonicParsing="false" onAction="#operationButtonPushed" prefHeight="40.0" prefWidth="40.0" text="-" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="plusButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Button fx:id="plusButton" mnemonicParsing="false" onAction="#operationButtonPushed" prefHeight="40.0" prefWidth="40.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
          </children>
       </GridPane>
-      <TextField fx:id="display" alignment="CENTER_RIGHT" layoutX="57.0" layoutY="59.0" prefHeight="44.0" prefWidth="204.0">
+      <TextField fx:id="display" alignment="BOTTOM_RIGHT" layoutX="57.0" layoutY="43.0" prefHeight="60.0" prefWidth="204.0">
          <font>
             <Font size="20.0" />
          </font>
       </TextField>
+      <Label fx:id="historyLabel" alignment="CENTER_RIGHT" layoutX="57.0" layoutY="46.0" prefHeight="21.0" prefWidth="204.0" text="Label" />
    </children>
 </AnchorPane>

@@ -2,12 +2,14 @@
 package w17march14calculator;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import static javafx.application.ConditionalFeature.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -34,8 +36,9 @@ public class CalculatorViewController implements Initializable {
     @FXML private Button divideButton;
     @FXML private Button equalsButton;
     @FXML private TextField display;
+    @FXML private Label historyLabel;
     
-    private double firstNumber;
+    private ArrayList<String> numberStack;
     
     /**
      * This method will update the display with the number
@@ -46,29 +49,38 @@ public class CalculatorViewController implements Initializable {
         String buttonValue = ((Button)event.getSource()).getText();
         String originalDisplay = display.getText();
         
-        if (originalDisplay.equals("0"))
-            display.setText(buttonValue);
+        if (originalDisplay.contains(".") && buttonValue.equals("."))
+        {}  //do nothing
         else
-            display.setText(originalDisplay + buttonValue);
+        {
+            if (originalDisplay.equals("0") && !buttonValue.equals("."))
+                display.setText(buttonValue);
+            else
+                display.setText(originalDisplay + buttonValue);
+        }
+        
+        
     }
 
     public void operationButtonPushed(ActionEvent event)
     {
         String operator = ((Button)event.getSource()).getText();
         
-        if (firstNumber == 0)
-        {
-            firstNumber = Double.parseDouble(display.getText());
-            display.setText("0");    
-        }
-        else
-        {
-            double secondNumber = Double.parseDouble(display.getText());
-//          double result = calculate(first, second, operator);  
-            
-        }
+        numberStack.add(display.getText());
+        numberStack.add(operator);
+        
+        historyLabel.setText(formatNumberStack());
+    }
+    
+    /**
+     * This method will return the contents of the numberStack
+     * as a String
+     */
+    public String formatNumberStack()
+    {
         
     }
+    
     
     /**
      * Initializes the controller class.
@@ -76,6 +88,8 @@ public class CalculatorViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         display.setText("0");
+        historyLabel.setText("");
+        numberStack = new ArrayList();
     }    
     
 }
