@@ -39,7 +39,7 @@ public class CalculatorViewController implements Initializable {
     @FXML private Label historyLabel;
     
     private ArrayList<String> numberStack;
-    private boolean overwriteDisplay;
+    private boolean overwriteDisplay, resultShowing;
     
     /**
      * This method will update the display with the number
@@ -49,6 +49,7 @@ public class CalculatorViewController implements Initializable {
     {
         String buttonValue = ((Button)event.getSource()).getText();
         String originalDisplay = display.getText();
+        resultShowing = false;
         
         if (originalDisplay.contains(".") && buttonValue.equals("."))
         {}  //do nothing
@@ -69,13 +70,76 @@ public class CalculatorViewController implements Initializable {
     public void operationButtonPushed(ActionEvent event)
     {
         String operator = ((Button)event.getSource()).getText();
-        
-        numberStack.add(display.getText());
-        numberStack.add(operator);
-        
+         
+        //if it is an operator in the final position, change the operator in the stack
+        //and update the history label
+        if (checkIfLastElementAnOperator() && resultShowing)
+        {
+            numberStack.remove(numberStack.size()-1);
+            numberStack.add(operator);
+        }
+        else
+        {
+            numberStack.add(display.getText());
+            numberStack.add(operator);
+        }
+            
         historyLabel.setText(formatNumberStack());
         overwriteDisplay = true;
+        resultShowing = true;
+        
+        display.setText(Double.toString(calculateStack()));
     }
+    
+    public boolean checkIfLastElementAnOperator()
+    {
+        if (!numberStack.isEmpty())
+        {
+            String lastElement = numberStack.get(numberStack.size()-1);
+        
+            //change the last element in the arraylist
+            return (!lastElement.matches("[0-9]"));
+        }
+        return false;
+    }
+    
+    /**
+     * This method will parse the ArrayList called numberStack and call
+     * the calculate method for each operator and number
+     */
+    public double calculateStack()
+    {
+        double result =0;
+        double num1 = 0;
+        
+        //make sure there are numbers and operators in the stack
+        if (!numberStack.isEmpty())
+        {
+            num1 = Double.parseDouble(numberStack.get(0));
+            double num2;
+            String operator = "=";
+            
+            for (int i=1; i<numberStack.size() ; i++)
+            {
+                String element = numberStack.get(i);
+                
+                //check if the element is a number or an operator
+                if (element.matches("[0-9.]"))
+                {
+                    num2 = Double.parseDouble(element);
+                    result = calculate(num1, operator, num2);
+                    num1 = result;
+                }
+                else
+                {
+                    operator = element;
+                }
+            }
+        }
+        
+        return result;
+    }
+    
     
     /**
      * This method accepts 2 numbers and performs the math between them based
@@ -121,6 +185,7 @@ public class CalculatorViewController implements Initializable {
         historyLabel.setText("");
         numberStack = new ArrayList();
         overwriteDisplay = true;
+        resultShowing=true;
     }    
     
 }
